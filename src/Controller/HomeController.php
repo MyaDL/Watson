@@ -14,9 +14,31 @@ class HomeController {
      *
      * @param Application $app Silex application
      */
-    public function indexAction(Application $app) {
-        $links = $app['dao.link']->findAll();
-        return $app['twig']->render('index.html.twig', array('links' => $links));
+    public function indexAction(Application $app, Request $request) {
+        $limit = 6;
+        $page = 1;
+        $links = $app['dao.link']->findAllPaginated($page, $limit);
+
+        return $app['twig']->render('index.html.twig', array(
+            'links' => $links,
+        ));
+    }
+
+    public function articlesAction(Application $app, Request $request, $page) {
+        $limit = 15;
+        $links = $app['dao.link']->findAllPaginated($page,$limit);
+
+        // Récupérer le nombre total de liens
+        $totalLinks = count($app['dao.link']->findAll()); // Adapter cette méthode selon votre DAO
+
+        // Calculer le nombre total de pages
+        $totalPages = ceil($totalLinks / $limit);
+
+        return $app['twig']->render('articles.html.twig', array(
+            'links' => $links,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+        ));
     }
 
     /**
