@@ -45,6 +45,35 @@ class LinkDAO extends DAO
         }
         return $_links;
     }
+    /**
+     * Return a paginated list of links, sorted by date (most recent first).
+     *
+     * @param int $page The current page number
+     * @param int $limit The number of links per page
+     *
+     * @return array A paginated list of links.
+     */
+    public function findAllPaginated($page = 1, $limit = 15) {
+        $offset = ($page - 1) * $limit;
+
+        $sql = "
+        SELECT * 
+        FROM tl_liens 
+        ORDER BY lien_id DESC
+        LIMIT {$limit} OFFSET {$offset}
+    ";
+
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $_links = array();
+        foreach ($result as $row) {
+            $linkId          = $row['lien_id'];
+            $_links[$linkId] = $this->buildDomainObject($row);
+        }
+
+        return $_links;
+    }
 
     /**
      * Returns a link matching the supplied id.
