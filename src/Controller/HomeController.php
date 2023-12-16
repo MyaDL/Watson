@@ -4,6 +4,8 @@ namespace Watson\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DomCrawler\Crawler;
 
 class HomeController {
 
@@ -65,5 +67,63 @@ class HomeController {
             'last_username' => $app['session']->get('_security.last_username'),
             )
         );
+    }
+
+        /**
+     * RSS controller.
+     *
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
+    public function generateRss(Request $request, Application $app){
+
+        // Création du document XML
+        $xml = new \DOMDocument('1.0', 'utf-8');
+        $xml->formatOutput = true;
+
+        // Cration de la structure du flux
+        $rss= $xml->createElement("rss");
+        $rss->setAttribute("version", '2.0');
+        $xml->appendChild($rss);
+
+        // Créationd de la balise channel
+        $channel = $xml->createElement("channel");
+        $rss->appendChild($channel);
+        
+        // Ajout des éléments du flux
+        $title = $xml->createElement('title', 'FLUX RSS WATSON');
+        $link = $xml->createElement('link', 'http://localhost/uel313/Watson/web/RSS');
+        $description = $xml->createElement('description', 'Voici notre flux RSS');
+        $channel->appendChild($title);
+        $channel->appendChild($link);
+        $channel->appendChild($description);
+
+        // Ajout d'articles au flux
+        $links = $app['dao.link']->findAll();
+
+        for ($i = 1; $i < count($links); $i++) {
+            $item = $xml->createElement('item');
+
+            $itemTitle = $xml->createElement('title', $links[$i]->getTitle());
+            $itemLink = $xml->createElement('link', $links[$i]->getUrl());
+            $itemDescription = $xml->createElement('description', $links[$i]->getDesc());
+    
+            $item->appendChild($itemTitle);
+            $item->appendChild($itemLink);
+            $item->appendChild($itemDescription);
+    
+            $channel->appendChild($item);
+
+        }
+
+        
+
+        // Définition des en-têtes HTTP pour le contenu XML
+        $content = $xml->saveXML();
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/xml; charset=utf-8');
+
+        return $response;
+
     }
 }

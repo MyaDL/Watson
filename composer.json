@@ -10,10 +10,8 @@
         "twig/extensions": "1.3.*",
         "symfony/validator": "2.7.*",
         "symfony/config": "2.7.*",
-        "symfony/monolog-bridge": "2.7.*"
-    },
-    "require-dev": {
-      
+        "symfony/monolog-bridge": "2.7.*",
+        "symfony/dom-crawler": "^7.0"
     },
     "autoload": {
         "psr-4": {"Watson\\": "src"}
