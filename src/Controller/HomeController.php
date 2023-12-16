@@ -101,7 +101,7 @@ class HomeController {
         // Ajout d'articles au flux
         $links = $app['dao.link']->findAll();
 
-        for ($i = 1; $i < count($links); $i++) {
+        for ($i = 1; $i <= count($links); $i++) {
             $item = $xml->createElement('item');
 
             $itemTitle = $xml->createElement('title', $links[$i]->getTitle());
