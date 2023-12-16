@@ -17,12 +17,17 @@ class AdminController {
      *
      * @param Application $app Silex application
      */
-    public function indexAction(Application $app) {
-        $links = $app['dao.link']->findAll();
+    public function indexAction(Application $app,Request $request, $page) {
+        $limit = 15;
+        $links = $app['dao.link']->findAllPaginated($page,$limit);
         $users = $app['dao.user']->findAll();
+
+
+
         return $app['twig']->render('admin.html.twig', array(
             'links' => $links,
-            'users' => $users));
+            'users' => $users,
+        ));
     }
 
     /**
