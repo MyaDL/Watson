@@ -5,7 +5,7 @@
 {% block content %}
 	<div class="row box-content">
 		{% for link in links %}
-			<div class="col-md-4 box-link">
+			<div class="col-md-3 box-link">
 			    <h2><a class="linkTitle" href="{{ path('link', { 'id': link.id }) }}">{{ link.title }}</a></h2>
 			    <p>{{ link.desc }}</p>
 			    <a href="{{ link.url }}" title="" target="_blank">Open ></a>
@@ -21,7 +21,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12 d-flex text-center buttonMore">
-			<a href="{{ path('articles') }}"><button>View More</button></a>
+			<a href="{{ path('articles') }}"><button class="btn btn-light">View More</button></a>
 		</div>
 	</div>
 	<div class="row">
