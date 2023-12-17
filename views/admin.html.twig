@@ -63,6 +63,12 @@
                 {% endfor %}
             </table>
         </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                {% for i in 1..totalPages %}
+                    <a href="{{ path('admin', { 'page': i }) }}" {% if currentPage == i %}class="active"{% endif %}>{{ i }}</a>
+                {% endfor %}
+            </div>
         {% else %}
         <div class="alert alert-warning">No links found.</div>
         {% endif %}

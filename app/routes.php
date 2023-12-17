@@ -3,6 +3,10 @@
 // Home page
 $app->get('/', "Watson\Controller\HomeController::indexAction")->bind('home');
 
+$app->get('/articles/{page}', "Watson\Controller\HomeController::articlesAction")
+    ->bind('articles')
+    ->value('page', 1);
+
 // Detailed info about a link
 $app->match('/link/{id}', "Watson\Controller\HomeController::linkAction")->bind('link');
 
@@ -16,7 +20,9 @@ $app->get('/login', "Watson\Controller\HomeController::loginAction")->bind('logi
 $app->get('/rss', "Watson\Controller\HomeController::generateRss")->bind('rss');
 
 // Admin zone
-$app->get('/admin', "Watson\Controller\AdminController::indexAction")->bind('admin');
+$app->get('/admin/{page}', "Watson\Controller\AdminController::indexAction")
+    ->bind('admin')
+    ->value('page', 1); // Valeur par défaut si le paramètre n'est pas présent dans l'URL;
 
 // Add a new link
 $app->match('/admin/link/add', "Watson\Controller\AdminController::addLinkAction")->bind('admin_link_add');
