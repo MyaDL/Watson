@@ -40,3 +40,40 @@ body {
 .buttonMore{
     margin-top: 30px;
 }
+
+.box-content{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.box-link{
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 26px 5px rgba(0,0,0,0.25); 
+    box-shadow: 5px 5px 26px 5px rgba(0,0,0,0.25);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.box-link h2{
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.pagination a{
+    background-color: #cdcdcd;
+    padding: 5px;
+    color: #23527c;
+}
+
+.pagination a:hover{
+    text-decoration: none;
+}
+
+.pagination a.active{
+    background-color: #337ab7;
+    padding: 5px;
+    color: #fff;
+}
